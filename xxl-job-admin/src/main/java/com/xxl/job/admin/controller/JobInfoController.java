@@ -152,6 +152,27 @@ public class JobInfoController {
 	public ReturnT<String> removeJob(String id) {
 		return xxlJobService.remove(Integer.parseInt(id));
 	}
+
+	@RequestMapping("/updateJob")
+	@ResponseBody
+	@PermissionLimit(limit = false)
+	public ReturnT<String> updateJob(@RequestBody XxlJobInfo jobInfo) {
+		return xxlJobService.update(jobInfo);
+	}
+
+	@RequestMapping("/stopJob")
+	@ResponseBody
+	@PermissionLimit(limit = false)
+	public ReturnT<String> pauseJob(String id) {
+		return xxlJobService.stop(Integer.parseInt(id));
+	}
+
+	@RequestMapping("/startJob")
+	@ResponseBody
+	@PermissionLimit(limit = false)
+	public ReturnT<String> startJob(String id) {
+		return xxlJobService.start(Integer.parseInt(id));
+	}
 	
 	@RequestMapping("/trigger")
 	@ResponseBody
