@@ -1,5 +1,6 @@
 package com.xxl.job.admin.controller;
 
+import com.xxl.job.admin.controller.annotation.PermissionLimit;
 import com.xxl.job.admin.core.cron.CronExpression;
 import com.xxl.job.admin.core.exception.XxlJobException;
 import com.xxl.job.admin.core.model.XxlJobGroup;
@@ -23,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -135,6 +137,20 @@ public class JobInfoController {
 	@ResponseBody
 	public ReturnT<String> start(int id) {
 		return xxlJobService.start(id);
+	}
+
+	@RequestMapping("/addJob")
+	@ResponseBody
+	@PermissionLimit(limit = false)
+	public ReturnT<String> addJob(@RequestBody XxlJobInfo jobInfo) {
+		return xxlJobService.add(jobInfo);
+	}
+
+	@RequestMapping("/removeJob")
+	@ResponseBody
+	@PermissionLimit(limit = false)
+	public ReturnT<String> removeJob(String id) {
+		return xxlJobService.remove(Integer.parseInt(id));
 	}
 	
 	@RequestMapping("/trigger")
